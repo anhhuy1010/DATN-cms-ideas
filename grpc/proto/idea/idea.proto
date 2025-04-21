@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package idea;
+option go_package = "github.com/anhhuy1010/DATN-cms-ideas/grpc/proto/idea;idea";
+
+
+service IdeaService {
+  rpc ListIdeas (ListIdeasRequest) returns (ListIdeasResponse);
+}
+
+message ListIdeasRequest {
+  int32 page = 1;
+  int32 limit = 2;
+}
+
+message Idea {
+  string uuid = 1;
+  string ideasname = 2;
+  string industry = 3;
+  string content_detail = 4;
+  int32 price = 5;
+  string post_day = 6;
+}
+
+message ListIdeasResponse {
+  repeated Idea ideas = 1;
+}

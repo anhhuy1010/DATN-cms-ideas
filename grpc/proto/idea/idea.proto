@@ -2,23 +2,23 @@ syntax = "proto3";
 
 package idea;
 
-option go_package = "github.com/anhhuy1010/DATN-cms-idea/grpc/proto/idea";
+option go_package = "github.com/anhhuy1010/DATN-cms-ideas/grpc/proto/idea";
+
+service IdeaService {
+  rpc CreateIdea (CreateIdeaRequest) returns (CreateIdeaResponse);
+}
 
 message CreateIdeaRequest {
-  string ideas_name = 1;
-  string industry = 2;
-  string content_detail = 3;
-  int32 price = 4;
-  string customer_uuid = 5;
-  string customer_name = 6;
-  string customer_email = 7;
+  string customer_uuid = 1;
+  string customer_name = 2;
+  string customer_email = 3;
+  string ideas_name = 4;
+  string industry = 5;
+  string content_detail = 6;
+  int32 price = 7;
 }
 
 message CreateIdeaResponse {
   string uuid = 1;
-  string message = 2
-}
-
-service IdeaService {
-  rpc CreateIdea(CreateIdeaRequest) returns (CreateIdeaResponse);
+  string message = 2;
 }

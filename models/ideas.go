@@ -16,6 +16,7 @@ import (
 
 type Ideas struct {
 	Uuid           string    `json:"uuid,omitempty" bson:"uuid"`
+	CustomerUuid   string    `json:"customeruuid,omitempty" bson:"customeruuid"`
 	IdeasName      string    `json:"ideasname" bson:"ideasname"`
 	Industry       string    `json:"industry" bson:"industry"`
 	OrtherIndustry string    `json:"orderindustry,omitempty" bson:"orderindustry"`
@@ -27,6 +28,8 @@ type Ideas struct {
 	IsActive       int       `json:"is_active" bson:"is_active"`
 	IsDelete       int       `json:"is_delete" bson:"is_delete"`
 	PostDay        time.Time `json:"post_day" bson:"post_day"`
+	CustomerName   string    `json:"customer_name" bson:"customer_name"`
+	CustomerEmail  string    `json:"customer_email" bson:"customer_email"`
 }
 
 func (u *Ideas) Model() *mongo.Collection {
@@ -120,15 +123,10 @@ func (u *Ideas) FindOne(conditions map[string]interface{}) (*Ideas, error) {
 	return u, nil
 }
 
-func (u *Ideas) Insert() (interface{}, error) {
+func (u *Ideas) Insert(ctx context.Context) error {
 	coll := u.Model()
-
-	resp, err := coll.InsertOne(context.TODO(), u)
-	if err != nil {
-		return 0, err
-	}
-
-	return resp, nil
+	_, err := coll.InsertOne(ctx, u)
+	return err
 }
 
 func (u *Ideas) InsertMany(Users []interface{}) ([]interface{}, error) {

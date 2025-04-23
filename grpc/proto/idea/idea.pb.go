@@ -24,17 +24,22 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type ListIdeasRequest struct {
+type CreateIdeaRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Page  int32 `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
-	Limit int32 `protobuf:"varint,2,opt,name=limit,proto3" json:"limit,omitempty"`
+	IdeasName     string `protobuf:"bytes,1,opt,name=ideas_name,json=ideasName,proto3" json:"ideas_name,omitempty"`
+	Industry      string `protobuf:"bytes,2,opt,name=industry,proto3" json:"industry,omitempty"`
+	ContentDetail string `protobuf:"bytes,3,opt,name=content_detail,json=contentDetail,proto3" json:"content_detail,omitempty"`
+	Price         int32  `protobuf:"varint,4,opt,name=price,proto3" json:"price,omitempty"`
+	CustomerUuid  string `protobuf:"bytes,5,opt,name=customer_uuid,json=customerUuid,proto3" json:"customer_uuid,omitempty"`
+	CustomerName  string `protobuf:"bytes,6,opt,name=customer_name,json=customerName,proto3" json:"customer_name,omitempty"`
+	CustomerEmail string `protobuf:"bytes,7,opt,name=customer_email,json=customerEmail,proto3" json:"customer_email,omitempty"`
 }
 
-func (x *ListIdeasRequest) Reset() {
-	*x = ListIdeasRequest{}
+func (x *CreateIdeaRequest) Reset() {
+	*x = CreateIdeaRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_idea_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -42,13 +47,13 @@ func (x *ListIdeasRequest) Reset() {
 	}
 }
 
-func (x *ListIdeasRequest) String() string {
+func (x *CreateIdeaRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ListIdeasRequest) ProtoMessage() {}
+func (*CreateIdeaRequest) ProtoMessage() {}
 
-func (x *ListIdeasRequest) ProtoReflect() protoreflect.Message {
+func (x *CreateIdeaRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_idea_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -60,40 +65,71 @@ func (x *ListIdeasRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ListIdeasRequest.ProtoReflect.Descriptor instead.
-func (*ListIdeasRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use CreateIdeaRequest.ProtoReflect.Descriptor instead.
+func (*CreateIdeaRequest) Descriptor() ([]byte, []int) {
 	return file_idea_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *ListIdeasRequest) GetPage() int32 {
+func (x *CreateIdeaRequest) GetIdeasName() string {
 	if x != nil {
-		return x.Page
+		return x.IdeasName
+	}
+	return ""
+}
+
+func (x *CreateIdeaRequest) GetIndustry() string {
+	if x != nil {
+		return x.Industry
+	}
+	return ""
+}
+
+func (x *CreateIdeaRequest) GetContentDetail() string {
+	if x != nil {
+		return x.ContentDetail
+	}
+	return ""
+}
+
+func (x *CreateIdeaRequest) GetPrice() int32 {
+	if x != nil {
+		return x.Price
 	}
 	return 0
 }
 
-func (x *ListIdeasRequest) GetLimit() int32 {
+func (x *CreateIdeaRequest) GetCustomerUuid() string {
 	if x != nil {
-		return x.Limit
+		return x.CustomerUuid
 	}
-	return 0
+	return ""
 }
 
-type Idea struct {
+func (x *CreateIdeaRequest) GetCustomerName() string {
+	if x != nil {
+		return x.CustomerName
+	}
+	return ""
+}
+
+func (x *CreateIdeaRequest) GetCustomerEmail() string {
+	if x != nil {
+		return x.CustomerEmail
+	}
+	return ""
+}
+
+type CreateIdeaResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Uuid          string `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
-	Ideasname     string `protobuf:"bytes,2,opt,name=ideasname,proto3" json:"ideasname,omitempty"`
-	Industry      string `protobuf:"bytes,3,opt,name=industry,proto3" json:"industry,omitempty"`
-	ContentDetail string `protobuf:"bytes,4,opt,name=content_detail,json=contentDetail,proto3" json:"content_detail,omitempty"`
-	Price         int32  `protobuf:"varint,5,opt,name=price,proto3" json:"price,omitempty"`
-	PostDay       string `protobuf:"bytes,6,opt,name=post_day,json=postDay,proto3" json:"post_day,omitempty"`
+	Uuid    string `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
+	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 }
 
-func (x *Idea) Reset() {
-	*x = Idea{}
+func (x *CreateIdeaResponse) Reset() {
+	*x = CreateIdeaResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_idea_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -101,13 +137,13 @@ func (x *Idea) Reset() {
 	}
 }
 
-func (x *Idea) String() string {
+func (x *CreateIdeaResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Idea) ProtoMessage() {}
+func (*CreateIdeaResponse) ProtoMessage() {}
 
-func (x *Idea) ProtoReflect() protoreflect.Message {
+func (x *CreateIdeaResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_idea_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -119,132 +155,59 @@ func (x *Idea) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Idea.ProtoReflect.Descriptor instead.
-func (*Idea) Descriptor() ([]byte, []int) {
+// Deprecated: Use CreateIdeaResponse.ProtoReflect.Descriptor instead.
+func (*CreateIdeaResponse) Descriptor() ([]byte, []int) {
 	return file_idea_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *Idea) GetUuid() string {
+func (x *CreateIdeaResponse) GetUuid() string {
 	if x != nil {
 		return x.Uuid
 	}
 	return ""
 }
 
-func (x *Idea) GetIdeasname() string {
+func (x *CreateIdeaResponse) GetMessage() string {
 	if x != nil {
-		return x.Ideasname
+		return x.Message
 	}
 	return ""
-}
-
-func (x *Idea) GetIndustry() string {
-	if x != nil {
-		return x.Industry
-	}
-	return ""
-}
-
-func (x *Idea) GetContentDetail() string {
-	if x != nil {
-		return x.ContentDetail
-	}
-	return ""
-}
-
-func (x *Idea) GetPrice() int32 {
-	if x != nil {
-		return x.Price
-	}
-	return 0
-}
-
-func (x *Idea) GetPostDay() string {
-	if x != nil {
-		return x.PostDay
-	}
-	return ""
-}
-
-type ListIdeasResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Ideas []*Idea `protobuf:"bytes,1,rep,name=ideas,proto3" json:"ideas,omitempty"`
-}
-
-func (x *ListIdeasResponse) Reset() {
-	*x = ListIdeasResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_idea_proto_msgTypes[2]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *ListIdeasResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListIdeasResponse) ProtoMessage() {}
-
-func (x *ListIdeasResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_idea_proto_msgTypes[2]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListIdeasResponse.ProtoReflect.Descriptor instead.
-func (*ListIdeasResponse) Descriptor() ([]byte, []int) {
-	return file_idea_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *ListIdeasResponse) GetIdeas() []*Idea {
-	if x != nil {
-		return x.Ideas
-	}
-	return nil
 }
 
 var File_idea_proto protoreflect.FileDescriptor
 
 var file_idea_proto_rawDesc = []byte{
 	0x0a, 0x0a, 0x69, 0x64, 0x65, 0x61, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x04, 0x69, 0x64,
-	0x65, 0x61, 0x22, 0x3c, 0x0a, 0x10, 0x4c, 0x69, 0x73, 0x74, 0x49, 0x64, 0x65, 0x61, 0x73, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x61, 0x67, 0x65, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x70, 0x61, 0x67, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x6c, 0x69,
-	0x6d, 0x69, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74,
-	0x22, 0xac, 0x01, 0x0a, 0x04, 0x49, 0x64, 0x65, 0x61, 0x12, 0x12, 0x0a, 0x04, 0x75, 0x75, 0x69,
-	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x75, 0x75, 0x69, 0x64, 0x12, 0x1c, 0x0a,
-	0x09, 0x69, 0x64, 0x65, 0x61, 0x73, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x09, 0x69, 0x64, 0x65, 0x61, 0x73, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x69,
-	0x6e, 0x64, 0x75, 0x73, 0x74, 0x72, 0x79, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69,
-	0x6e, 0x64, 0x75, 0x73, 0x74, 0x72, 0x79, 0x12, 0x25, 0x0a, 0x0e, 0x63, 0x6f, 0x6e, 0x74, 0x65,
-	0x6e, 0x74, 0x5f, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x0d, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x12, 0x14,
-	0x0a, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x70,
-	0x72, 0x69, 0x63, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x70, 0x6f, 0x73, 0x74, 0x5f, 0x64, 0x61, 0x79,
-	0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x70, 0x6f, 0x73, 0x74, 0x44, 0x61, 0x79, 0x22,
-	0x35, 0x0a, 0x11, 0x4c, 0x69, 0x73, 0x74, 0x49, 0x64, 0x65, 0x61, 0x73, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x20, 0x0a, 0x05, 0x69, 0x64, 0x65, 0x61, 0x73, 0x18, 0x01, 0x20,
-	0x03, 0x28, 0x0b, 0x32, 0x0a, 0x2e, 0x69, 0x64, 0x65, 0x61, 0x2e, 0x49, 0x64, 0x65, 0x61, 0x52,
-	0x05, 0x69, 0x64, 0x65, 0x61, 0x73, 0x32, 0x4b, 0x0a, 0x0b, 0x49, 0x64, 0x65, 0x61, 0x53, 0x65,
-	0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x3c, 0x0a, 0x09, 0x4c, 0x69, 0x73, 0x74, 0x49, 0x64, 0x65,
-	0x61, 0x73, 0x12, 0x16, 0x2e, 0x69, 0x64, 0x65, 0x61, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x49, 0x64,
-	0x65, 0x61, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x17, 0x2e, 0x69, 0x64, 0x65,
-	0x61, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x49, 0x64, 0x65, 0x61, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x42, 0x3b, 0x5a, 0x39, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
-	0x6d, 0x2f, 0x61, 0x6e, 0x68, 0x68, 0x75, 0x79, 0x31, 0x30, 0x31, 0x30, 0x2f, 0x44, 0x41, 0x54,
-	0x4e, 0x2d, 0x63, 0x6d, 0x73, 0x2d, 0x69, 0x64, 0x65, 0x61, 0x73, 0x2f, 0x67, 0x72, 0x70, 0x63,
-	0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x69, 0x64, 0x65, 0x61, 0x3b, 0x69, 0x64, 0x65, 0x61,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x61, 0x22, 0xfc, 0x01, 0x0a, 0x11, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x49, 0x64, 0x65,
+	0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1d, 0x0a, 0x0a, 0x69, 0x64, 0x65, 0x61,
+	0x73, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x69, 0x64,
+	0x65, 0x61, 0x73, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x69, 0x6e, 0x64, 0x75, 0x73,
+	0x74, 0x72, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6e, 0x64, 0x75, 0x73,
+	0x74, 0x72, 0x79, 0x12, 0x25, 0x0a, 0x0e, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x5f, 0x64,
+	0x65, 0x74, 0x61, 0x69, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x63, 0x6f, 0x6e,
+	0x74, 0x65, 0x6e, 0x74, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x72,
+	0x69, 0x63, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65,
+	0x12, 0x23, 0x0a, 0x0d, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x5f, 0x75, 0x75, 0x69,
+	0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65,
+	0x72, 0x55, 0x75, 0x69, 0x64, 0x12, 0x23, 0x0a, 0x0d, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65,
+	0x72, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x63, 0x75,
+	0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x25, 0x0a, 0x0e, 0x63, 0x75,
+	0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x5f, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x18, 0x07, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0d, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x45, 0x6d, 0x61, 0x69,
+	0x6c, 0x22, 0x42, 0x0a, 0x12, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x49, 0x64, 0x65, 0x61, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x75, 0x75, 0x69, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x75, 0x75, 0x69, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x6d,
+	0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65,
+	0x73, 0x73, 0x61, 0x67, 0x65, 0x32, 0x4e, 0x0a, 0x0b, 0x49, 0x64, 0x65, 0x61, 0x53, 0x65, 0x72,
+	0x76, 0x69, 0x63, 0x65, 0x12, 0x3f, 0x0a, 0x0a, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x49, 0x64,
+	0x65, 0x61, 0x12, 0x17, 0x2e, 0x69, 0x64, 0x65, 0x61, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65,
+	0x49, 0x64, 0x65, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x18, 0x2e, 0x69, 0x64,
+	0x65, 0x61, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x49, 0x64, 0x65, 0x61, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x35, 0x5a, 0x33, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
+	0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x68, 0x68, 0x75, 0x79, 0x31, 0x30, 0x31, 0x30, 0x2f, 0x44,
+	0x41, 0x54, 0x4e, 0x2d, 0x63, 0x6d, 0x73, 0x2d, 0x69, 0x64, 0x65, 0x61, 0x2f, 0x67, 0x72, 0x70,
+	0x63, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x69, 0x64, 0x65, 0x61, 0x62, 0x06, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -259,21 +222,19 @@ func file_idea_proto_rawDescGZIP() []byte {
 	return file_idea_proto_rawDescData
 }
 
-var file_idea_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_idea_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_idea_proto_goTypes = []interface{}{
-	(*ListIdeasRequest)(nil),  // 0: idea.ListIdeasRequest
-	(*Idea)(nil),              // 1: idea.Idea
-	(*ListIdeasResponse)(nil), // 2: idea.ListIdeasResponse
+	(*CreateIdeaRequest)(nil),  // 0: idea.CreateIdeaRequest
+	(*CreateIdeaResponse)(nil), // 1: idea.CreateIdeaResponse
 }
 var file_idea_proto_depIdxs = []int32{
-	1, // 0: idea.ListIdeasResponse.ideas:type_name -> idea.Idea
-	0, // 1: idea.IdeaService.ListIdeas:input_type -> idea.ListIdeasRequest
-	2, // 2: idea.IdeaService.ListIdeas:output_type -> idea.ListIdeasResponse
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	0, // 0: idea.IdeaService.CreateIdea:input_type -> idea.CreateIdeaRequest
+	1, // 1: idea.IdeaService.CreateIdea:output_type -> idea.CreateIdeaResponse
+	1, // [1:2] is the sub-list for method output_type
+	0, // [0:1] is the sub-list for method input_type
+	0, // [0:0] is the sub-list for extension type_name
+	0, // [0:0] is the sub-list for extension extendee
+	0, // [0:0] is the sub-list for field type_name
 }
 
 func init() { file_idea_proto_init() }
@@ -283,7 +244,7 @@ func file_idea_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_idea_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListIdeasRequest); i {
+			switch v := v.(*CreateIdeaRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -295,19 +256,7 @@ func file_idea_proto_init() {
 			}
 		}
 		file_idea_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Idea); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_idea_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListIdeasResponse); i {
+			switch v := v.(*CreateIdeaResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -325,7 +274,7 @@ func file_idea_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_idea_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -351,7 +300,7 @@ const _ = grpc.SupportPackageIsVersion6
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type IdeaServiceClient interface {
-	ListIdeas(ctx context.Context, in *ListIdeasRequest, opts ...grpc.CallOption) (*ListIdeasResponse, error)
+	CreateIdea(ctx context.Context, in *CreateIdeaRequest, opts ...grpc.CallOption) (*CreateIdeaResponse, error)
 }
 
 type ideaServiceClient struct {
@@ -362,9 +311,9 @@ func NewIdeaServiceClient(cc grpc.ClientConnInterface) IdeaServiceClient {
 	return &ideaServiceClient{cc}
 }
 
-func (c *ideaServiceClient) ListIdeas(ctx context.Context, in *ListIdeasRequest, opts ...grpc.CallOption) (*ListIdeasResponse, error) {
-	out := new(ListIdeasResponse)
-	err := c.cc.Invoke(ctx, "/idea.IdeaService/ListIdeas", in, out, opts...)
+func (c *ideaServiceClient) CreateIdea(ctx context.Context, in *CreateIdeaRequest, opts ...grpc.CallOption) (*CreateIdeaResponse, error) {
+	out := new(CreateIdeaResponse)
+	err := c.cc.Invoke(ctx, "/idea.IdeaService/CreateIdea", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -373,35 +322,35 @@ func (c *ideaServiceClient) ListIdeas(ctx context.Context, in *ListIdeasRequest,
 
 // IdeaServiceServer is the server API for IdeaService service.
 type IdeaServiceServer interface {
-	ListIdeas(context.Context, *ListIdeasRequest) (*ListIdeasResponse, error)
+	CreateIdea(context.Context, *CreateIdeaRequest) (*CreateIdeaResponse, error)
 }
 
 // UnimplementedIdeaServiceServer can be embedded to have forward compatible implementations.
 type UnimplementedIdeaServiceServer struct {
 }
 
-func (*UnimplementedIdeaServiceServer) ListIdeas(context.Context, *ListIdeasRequest) (*ListIdeasResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListIdeas not implemented")
+func (*UnimplementedIdeaServiceServer) CreateIdea(context.Context, *CreateIdeaRequest) (*CreateIdeaResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateIdea not implemented")
 }
 
 func RegisterIdeaServiceServer(s *grpc.Server, srv IdeaServiceServer) {
 	s.RegisterService(&_IdeaService_serviceDesc, srv)
 }
 
-func _IdeaService_ListIdeas_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListIdeasRequest)
+func _IdeaService_CreateIdea_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateIdeaRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(IdeaServiceServer).ListIdeas(ctx, in)
+		return srv.(IdeaServiceServer).CreateIdea(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/idea.IdeaService/ListIdeas",
+		FullMethod: "/idea.IdeaService/CreateIdea",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IdeaServiceServer).ListIdeas(ctx, req.(*ListIdeasRequest))
+		return srv.(IdeaServiceServer).CreateIdea(ctx, req.(*CreateIdeaRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -411,8 +360,8 @@ var _IdeaService_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*IdeaServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "ListIdeas",
-			Handler:    _IdeaService_ListIdeas_Handler,
+			MethodName: "CreateIdea",
+			Handler:    _IdeaService_CreateIdea_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

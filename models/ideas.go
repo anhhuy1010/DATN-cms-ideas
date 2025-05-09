@@ -20,7 +20,7 @@ type Ideas struct {
 	IdeasName      string    `json:"ideasname" bson:"ideasname"`
 	Industry       string    `json:"industry" bson:"industry"`
 	OrtherIndustry string    `json:"orderindustry,omitempty" bson:"orderindustry"`
-	IsProcedure    int       `json:"is_procedure,omitempty" bson:"is_procedure"`
+	Procedure      string    `json:"is_procedure,omitempty" bson:"is_procedure"`
 	ContentDetail  string    `json:"content_detail,omitempty" bson:"content_detail"`
 	Value_Benefits string    `json:"value_benefits,omitempty" bson:"value_benefits"`
 	Is_Intellect   int       `json:"is_intellect,omitempty" bson:"is_intellect"`
@@ -30,6 +30,7 @@ type Ideas struct {
 	PostDay        time.Time `json:"post_day" bson:"post_day"`
 	CustomerName   string    `json:"customer_name" bson:"customer_name"`
 	CustomerEmail  string    `json:"customer_email" bson:"customer_email"`
+	Image          string    `json:"image" bson:"image"`
 }
 
 func (u *Ideas) Model() *mongo.Collection {

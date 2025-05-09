@@ -14,7 +14,7 @@ import (
 
 func RouteInit(engine *gin.Engine) {
 	userCtr := new(controllers.UserController)
-	ideasCtr := new(controllers.IdeasController)
+	ideaCtr := new(controllers.IdeasController)
 
 	engine.GET("/health", func(c *gin.Context) {
 		c.String(http.StatusOK, "OK")
@@ -25,9 +25,6 @@ func RouteInit(engine *gin.Engine) {
 
 	apiV1 := engine.Group("/v1")
 	apiV1.Use(middleware.RequestLog())
-
-	// ❌ Không có RoleMiddleware ở đây
-	// Các route không cần xác thực
 
 	// ✅ Các route cần xác thực nằm trong group này
 	protected := apiV1.Group("/")
@@ -40,8 +37,8 @@ func RouteInit(engine *gin.Engine) {
 		protected.PUT("/customer/:uuid/update-status", userCtr.UpdateStatus)
 		protected.DELETE("/customer/:uuid", userCtr.Delete)
 		//////////////////////////////////////////////////////////////////////
-		protected.GET("/ideas", ideasCtr.List)
-		protected.GET("/ideas/:uuid", ideasCtr.Detail)
+		protected.GET("/ideas", ideaCtr.List)
+		protected.GET("/ideas/:uuid", ideaCtr.Detail)
 	}
 
 	engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))

@@ -7,7 +7,7 @@ import (
 func GetPagingOption(pageReq int, limitReq int, sortReq string) (ModelOption, int, int) {
 	var optionsQuery ModelOption
 	page := 1
-	limit := 10
+	limit := 3
 	if pageReq >= 0 {
 		page = pageReq
 	}

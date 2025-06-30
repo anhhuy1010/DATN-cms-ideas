@@ -9,10 +9,17 @@ import (
 )
 
 var config *viper.Viper
+var BaseApiUrl string
 
 // Init is an exported method that takes the environment starts the viper
 // (external lib) and returns the configuration struct.
 func init() {
+
+	BaseApiUrl = os.Getenv("BASE_API_URL")
+	if BaseApiUrl == "" {
+		BaseApiUrl = "https://cms-ideas-app-c77ce0f9e466.herokuapp.com/"
+	}
+
 	env := os.Getenv("APP_ENV")
 	if env == "" {
 		env = "development"

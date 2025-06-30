@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/anhhuy1010/DATN-cms-ideas/database"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 
 	//"go.mongodb.org/mongo-driver/bson"
@@ -15,22 +16,24 @@ import (
 )
 
 type Ideas struct {
-	Uuid           string    `json:"uuid,omitempty" bson:"uuid"`
-	CustomerUuid   string    `json:"customeruuid,omitempty" bson:"customeruuid"`
-	IdeasName      string    `json:"ideasname" bson:"ideasname"`
-	Industry       string    `json:"industry" bson:"industry"`
-	OrtherIndustry string    `json:"orderindustry,omitempty" bson:"orderindustry"`
-	Procedure      string    `json:"is_procedure,omitempty" bson:"is_procedure"`
-	ContentDetail  string    `json:"content_detail,omitempty" bson:"content_detail"`
-	Value_Benefits string    `json:"value_benefits,omitempty" bson:"value_benefits"`
-	Is_Intellect   int       `json:"is_intellect,omitempty" bson:"is_intellect"`
-	Price          int       `json:"price,omitempty" bson:"price"`
-	IsActive       int       `json:"is_active" bson:"is_active"`
-	IsDelete       int       `json:"is_delete" bson:"is_delete"`
-	PostDay        time.Time `json:"post_day" bson:"post_day"`
-	CustomerName   string    `json:"customer_name" bson:"customer_name"`
-	CustomerEmail  string    `json:"customer_email" bson:"customer_email"`
-	Image          string    `json:"image" bson:"image"`
+	Uuid            string    `json:"uuid,omitempty" bson:"uuid"`
+	CustomerUuid    string    `json:"customeruuid,omitempty" bson:"customeruuid"`
+	IdeasName       string    `json:"ideasname" bson:"ideasname"`
+	Industry        string    `json:"industry" bson:"industry"`
+	Procedure       string    `json:"is_procedure,omitempty" bson:"is_procedure"`
+	ContentDetail   string    `json:"content_detail,omitempty" bson:"content_detail"`
+	Value_Benefits  string    `json:"value_benefits,omitempty" bson:"value_benefits"`
+	View            int       `json:"view " bson:"view"`
+	Is_Intellect    int       `json:"is_intellect,omitempty" bson:"is_intellect"`
+	Price           int       `json:"price,omitempty" bson:"price"`
+	IsActive        int       `json:"is_active" bson:"is_active"`
+	IsDelete        int       `json:"is_delete" bson:"is_delete"`
+	PostDay         time.Time `json:"post_day" bson:"post_day"`
+	CustomerName    string    `json:"customer_name" bson:"customer_name"`
+	CustomerEmail   string    `json:"customer_email" bson:"customer_email"`
+	Image           []string  `json:"image" bson:"image"`
+	Image_Intellect string    `json:"image_intellect" bson:"image_intellect"`
+	Status          int       `json:"status" bson:"status"` // 0 : chưa bán || 1 :  đã bán
 }
 
 func (u *Ideas) Model() *mongo.Collection {
@@ -66,6 +69,7 @@ func (u *Ideas) Find(conditions map[string]interface{}, opts ...*options.FindOpt
 	return users, nil
 }
 
+// //////////////////////////////////////////////////////////////////////////////////////////////
 func (u *Ideas) Pagination(ctx context.Context, conditions map[string]interface{}, modelOptions ...ModelOption) ([]*Ideas, error) {
 	coll := u.Model()
 
@@ -73,13 +77,13 @@ func (u *Ideas) Pagination(ctx context.Context, conditions map[string]interface{
 
 	modelOpt := ModelOption{}
 	findOptions := modelOpt.GetOption(modelOptions)
-	cursor, err := coll.Find(context.TODO(), conditions, findOptions)
+	cursor, err := coll.Find(ctx, conditions, findOptions)
 	if err != nil {
 		return nil, err
 	}
 
 	var users []*Ideas
-	for cursor.Next(context.TODO()) {
+	for cursor.Next(ctx) {
 		var elem Ideas
 		err := cursor.Decode(&elem)
 		if err != nil {
@@ -99,6 +103,7 @@ func (u *Ideas) Pagination(ctx context.Context, conditions map[string]interface{
 	return users, nil
 }
 
+// ///////////////////////////////////////////////////////////////////////////////////////////////
 func (u *Ideas) Distinct(conditions map[string]interface{}, fieldName string, opts ...*options.DistinctOptions) ([]interface{}, error) {
 	coll := u.Model()
 
@@ -112,6 +117,7 @@ func (u *Ideas) Distinct(conditions map[string]interface{}, fieldName string, op
 	return values, nil
 }
 
+// /////////////////////////////////////////////////////////////////////////////////////////////////
 func (u *Ideas) FindOne(conditions map[string]interface{}) (*Ideas, error) {
 	coll := u.Model()
 
@@ -124,12 +130,14 @@ func (u *Ideas) FindOne(conditions map[string]interface{}) (*Ideas, error) {
 	return u, nil
 }
 
+// ///////////////////////////////////////////////////////////////////////////////////////////
 func (u *Ideas) Insert(ctx context.Context) error {
 	coll := u.Model()
 	_, err := coll.InsertOne(ctx, u)
 	return err
 }
 
+// //////////////////////////////////////////////////////////
 func (u *Ideas) InsertMany(Users []interface{}) ([]interface{}, error) {
 	coll := u.Model()
 
@@ -141,6 +149,7 @@ func (u *Ideas) InsertMany(Users []interface{}) ([]interface{}, error) {
 	return resp.InsertedIDs, nil
 }
 
+// ///////////////////////////////////////////////////////////////////////////////////
 func (u *Ideas) Update() (int64, error) {
 	coll := u.Model()
 
@@ -158,6 +167,7 @@ func (u *Ideas) Update() (int64, error) {
 	return resp.ModifiedCount, nil
 }
 
+// ///////////////////////////////////////////////////////////////////////////////////
 func (u *Ideas) UpdateByCondition(condition map[string]interface{}, data map[string]interface{}) (int64, error) {
 	coll := u.Model()
 
@@ -169,6 +179,7 @@ func (u *Ideas) UpdateByCondition(condition map[string]interface{}, data map[str
 	return resp.ModifiedCount, nil
 }
 
+// ////////////////////////////////////////////////////////////////////////////////////
 func (u *Ideas) UpdateMany(conditions map[string]interface{}, updateData map[string]interface{}) (int64, error) {
 	coll := u.Model()
 	resp, err := coll.UpdateMany(context.TODO(), conditions, updateData)
@@ -179,6 +190,7 @@ func (u *Ideas) UpdateMany(conditions map[string]interface{}, updateData map[str
 	return resp.ModifiedCount, nil
 }
 
+// //////////////////////////////////////////////////////////////////////////////////////
 func (u *Ideas) Count(ctx context.Context, condition map[string]interface{}) (int64, error) {
 	coll := u.Model()
 
@@ -191,3 +203,65 @@ func (u *Ideas) Count(ctx context.Context, condition map[string]interface{}) (in
 
 	return total, nil
 }
+
+// ////////////////////////////////////////////////////////////////////////////////////////////
+func (u *Ideas) FindManyByUuids(uuids []string) ([]Ideas, error) {
+	coll := u.Model()
+
+	filter := bson.M{"uuid": bson.M{"$in": uuids}}
+
+	cursor, err := coll.Find(context.TODO(), filter)
+	if err != nil {
+		return nil, err
+	}
+
+	var ideas []Ideas
+	if err := cursor.All(context.TODO(), &ideas); err != nil {
+		return nil, err
+	}
+	return ideas, nil
+}
+func (u *Ideas) FindOneAdmin(conditions map[string]interface{}) (*Ideas, error) {
+	coll := u.Model()
+
+	err := coll.FindOne(context.TODO(), conditions).Decode(&u)
+	if err != nil {
+		return nil, err
+	}
+
+	return u, nil
+}
+
+// ////////////////////////////////////////////////////////////////////
+func (u *Ideas) PaginationAdmin(ctx context.Context, conditions map[string]interface{}, modelOptions ...ModelOption) ([]*Ideas, error) {
+	coll := u.Model()
+
+	modelOpt := ModelOption{}
+	findOptions := modelOpt.GetOption(modelOptions)
+	cursor, err := coll.Find(ctx, conditions, findOptions)
+	if err != nil {
+		return nil, err
+	}
+
+	var users []*Ideas
+	for cursor.Next(ctx) {
+		var elem Ideas
+		err := cursor.Decode(&elem)
+		if err != nil {
+			log.Println("[Decode] PopularCuisine:", err)
+			log.Println("-> #", elem.Uuid)
+			continue
+		}
+
+		users = append(users, &elem)
+	}
+
+	if err := cursor.Err(); err != nil {
+		return nil, err
+	}
+	_ = cursor.Close(context.TODO())
+
+	return users, nil
+}
+
+////////////////////////////////////////////////////////////////////

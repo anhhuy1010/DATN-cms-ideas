@@ -25,3 +25,7 @@ proto-idea:
 		-I /usr/include \
 		--go_out=paths=source_relative,plugins=grpc:grpc/proto/idea/ \
 		grpc/proto/idea/idea.proto
+push-app:
+	heroku container:push web -a cms-ideas-app
+build-app:
+	heroku container:release web -a cms-ideas-app

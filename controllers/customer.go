@@ -331,47 +331,48 @@ func (userCtl UserController) Delete(c *gin.Context) {
 }
 
 // //////////////////////////////////////////////////////////////////////////
-func (userCtl UserController) UpdateStatus(c *gin.Context) {
-	userModel := new(models.Customer)
-	var reqUri request.UpdateStatusUri
-	// Validation input
-	err := c.ShouldBindUri(&reqUri)
-	if err != nil {
-		_ = c.Error(err)
-		c.JSON(http.StatusBadRequest, respond.MissingParams())
-		return
-	}
-	var req request.UpdateStatusRequest
-	err = c.ShouldBindJSON(&req)
-	if err != nil {
-		_ = c.Error(err)
-		c.JSON(http.StatusBadRequest, respond.MissingParams())
-		return
-	}
+// func (userCtl UserController) UpdateStatus(c *gin.Context) {
+// 	userModel := new(models.Customer)
+// 	var reqUri request.UpdateStatusUri
+// 	// Validation input
+// 	err := c.ShouldBindUri(&reqUri)
+// 	if err != nil {
+// 		_ = c.Error(err)
+// 		c.JSON(http.StatusBadRequest, respond.MissingParams())
+// 		return
+// 	}
+// 	var req request.UpdateStatusRequest
+// 	err = c.ShouldBindJSON(&req)
+// 	if err != nil {
+// 		_ = c.Error(err)
+// 		c.JSON(http.StatusBadRequest, respond.MissingParams())
+// 		return
+// 	}
 
-	if *req.IsActive < 0 || *req.IsActive > 1 {
-		c.JSON(http.StatusBadRequest, respond.ErrorCommon("Stauts just can be set in range [0..1]"))
-		return
-	}
+// 	if *req.IsActive < 0 || *req.IsActive > 1 {
+// 		c.JSON(http.StatusBadRequest, respond.ErrorCommon("Stauts just can be set in range [0..1]"))
+// 		return
+// 	}
 
-	condition := bson.M{"uuid": reqUri.Uuid}
-	user, err := userModel.FindOne(condition)
-	if err != nil {
-		fmt.Println(err.Error())
-		c.JSON(http.StatusBadRequest, respond.ErrorCommon("User no found!"))
-		return
-	}
+// 	condition := bson.M{"uuid": reqUri.Uuid}
+// 	user, err := userModel.FindOne(condition)
 
-	user.IsActive = *req.IsActive
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 		c.JSON(http.StatusBadRequest, respond.ErrorCommon("User no found!"))
+// 		return
+// 	}
 
-	_, err = user.Update()
-	if err != nil {
-		fmt.Println(err.Error())
-		c.JSON(http.StatusBadRequest, respond.UpdatedFail())
-		return
-	}
-	c.JSON(http.StatusOK, respond.Success(user.Uuid, "update successfully"))
-}
+// 	user.IsActive = *req.IsActive
+
+// 	_, err = user.Update()
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 		c.JSON(http.StatusBadRequest, respond.UpdatedFail())
+// 		return
+// 	}
+// 	c.JSON(http.StatusOK, respond.Success(user.Uuid, "update successfully"))
+// }
 
 // //////////////////////////////////////////////////////////////////////////
 func (userCtl UserController) Create(c *gin.Context) {

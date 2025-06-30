@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/anhhuy1010/DATN-cms-customer/database"
+	"github.com/anhhuy1010/DATN-cms-ideas/database"
 	"go.mongodb.org/mongo-driver/mongo"
 	"golang.org/x/crypto/bcrypt"
 
